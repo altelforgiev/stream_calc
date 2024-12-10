@@ -1,20 +1,18 @@
 import os
-
 import streamlit as st
 # import streamlit_authenticator as stauth
 import hmac
 
-#if st.secrets["password"] == "":
-#    password = os.environ["password"]
-#else:
-#    password = st.secrets["password"]
+# Add a check to use `os.environ["password"]` if `st.secrets["password"]` does not exist.
+password_source = st.secrets["password"] if "password" in st.secrets else os.environ["password"]
+
 
 def check_password():
     """Returns `True` if the user had the correct password."""
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if hmac.compare_digest(st.session_state["password"], os.environ["password"]):
+        if hmac.compare_digest(st.session_state["password"], password_source):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # Don't store the password.
         else:
