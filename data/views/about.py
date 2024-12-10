@@ -15,3 +15,13 @@ https://www.gov.kz/memleket/entities/karaganda-transport
     """
 )
 
+
+program_description = """
+<h2 style="color:blue;text-align:center;">Информация о программе</h2>
+<p>Программное обеспечение <b>«Расчет тарифов за проезд по действующим социально значимым маршрутам Карагандинской агломерации»</b> предназначено для обеспечения методической основы расчета тарифов за проезд.</p>
+<p>Разработано Научно-техническим центром <a href="https://www.kstu.kz/nauchno-tehnicheskij-tsentr-promyshlennyj-transport/" target="_blank">STU-ENGINEERING</a> Карагандинского технического университета имени Абылкаса Сагинова для Государственного учреждения <a href="https://www.gov.kz/memleket/entities/karaganda-transport" target="_blank">«Управление пассажирского транспорта и автомобильных дорог Карагандинской области»</a>.</p>
+<p>Работа выполнена в рамках научно-исследовательского проекта по разработке концепции развития транспортной системы до 2030 года.</p>
+"""
+
+st.markdown(program_description, unsafe_allow_html=True)
+# The detailed, consolidated HTML content above already replaces this html_content variable, making it redundant.
