@@ -4,10 +4,10 @@ import streamlit as st
 # import streamlit_authenticator as stauth
 import hmac
 
-if st.secrets["password"] == "":
-    password = os.environ["password"]
-else:
-    password = st.secrets["password"]
+#if st.secrets["password"] == "":
+#    password = os.environ["password"]
+#else:
+#    password = st.secrets["password"]
 
 def check_password():
     """Returns `True` if the user had the correct password."""
