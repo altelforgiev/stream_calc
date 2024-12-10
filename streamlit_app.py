@@ -4,7 +4,7 @@ import streamlit as st
 # import streamlit_authenticator as stauth
 import hmac
 
-if st.secrets["password"] is None:
+if st.secrets["password"] == "":
     password = os.environ["password"]
 else:
     password = st.secrets["password"]
