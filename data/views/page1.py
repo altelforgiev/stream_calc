@@ -80,7 +80,7 @@ if st.session_state.show_form:
                 st.session_state.enterprises = load_data_from_db()
                 st.success(f"Предприятие успешно добавлено. ID: {new_id}.")
                 st.session_state.show_form = False  # Скрываем форму после добавления
-                st.experimental_rerun()  # Обновляем страницу, чтобы форма скрылась
+                st.rerun()  # Обновляем страницу, чтобы форма скрылась
             else:
                 st.error("Оба поля должны быть заполнены!")
 
