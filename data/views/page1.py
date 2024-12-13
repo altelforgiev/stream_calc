@@ -90,7 +90,7 @@ if not st.session_state.enterprises.empty:
     # Настраиваем таблицу
     gb = GridOptionsBuilder.from_dataframe(st.session_state.enterprises)
     gb.configure_column("id", suppressMovable=True)
-    gb.configure_pagination(paginationAutoPageSize=True)  # Пагинация
+    #gb.configure_pagination(paginationAutoPageSize=True)  # Пагинация
     gb.configure_default_column(editable=True)  # Все колонки редактируемые
     gb.configure_selection(selection_mode="multiple", use_checkbox=True)  # Выбор строк через чекбокс
     grid_options = gb.build()
@@ -109,11 +109,12 @@ if not st.session_state.enterprises.empty:
     # Кнопки управления
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Сохранить изменения", key="save_changes_button"):
-            # Сохраняем изменения в базу данных
-            save_data_to_db(pd.DataFrame(updated_data))
-            st.session_state.enterprises = load_data_from_db()  # Синхронизируем с состоянием
-            st.success("Изменения успешно сохранены в базе данных!")
+        ""
+        #if st.button("Сохранить изменения", key="save_changes_button"):
+        #    # Сохраняем изменения в базу данных
+        #    save_data_to_db(pd.DataFrame(updated_data))
+        #    st.session_state.enterprises = load_data_from_db()  # Синхронизируем с состоянием
+        #    st.success("Изменения успешно сохранены в базе данных!")
 
     with col2:
         selected_rows = grid_response.get("selected_rows")
@@ -126,6 +127,7 @@ if not st.session_state.enterprises.empty:
                 # Обновляем состояние и данные в таблице
                 st.session_state.enterprises = load_data_from_db()
                 st.success("Выбранные строки успешно удалены!")
+                st.rerun()
             else:
                 st.warning("Нет выбранных строк для удаления.")
 else:
