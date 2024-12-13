@@ -7,7 +7,7 @@ import hmac
 translations = {
     "en": {
         "password": "Password",
-        "password_incorrect": "😕 Password incorrect",
+        "password_incorrect": "Password incorrect",
         "about": "About",
         "project_1": "TRANSPORT ENTERPRISES",
         "project_2": "ROUTES",
@@ -16,7 +16,7 @@ translations = {
     },
     "ru": {
         "password": "Пароль",
-        "password_incorrect": "😕 Неверный пароль",
+        "password_incorrect": "Неверный пароль",
         "about": "О программе",
         "project_1": "ТРАНСПОРТНЫЕ ПРЕДПРИЯТИЯ",
         "project_2": "МАРШРУТЫ",
@@ -25,7 +25,7 @@ translations = {
     },
     "kk": {
         "password": "Құпия сөз",
-        "password_incorrect": "😕 Құпия сөз қате",
+        "password_incorrect": "Құпия сөз қате",
         "about": "Бағдарлама туралы",
         "project_1": "КӨЛІК КӘСІПОРЫНДАРЫ",
         "project_2": "МАРШРУТТАР",
@@ -35,7 +35,7 @@ translations = {
 }
 
 selected_language = st.sidebar.radio(
-    "Language / Язык / Тіл", ["en", "ru", "kk"], index=1
+    ":material/language:", ["kk", "ru", "en"], index=1
 )
 lang = translations[selected_language]
 
@@ -68,7 +68,7 @@ def check_password():
         lang["password"], type="password", on_change=password_entered, key="password"
     )
     if "password_correct" in st.session_state:
-        st.error("😕 Password incorrect")
+        st.error("Password incorrect")
     return False
 
 
