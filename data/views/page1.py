@@ -32,7 +32,16 @@ def load_data_from_db():
 # Функция для сохранения DataFrame в базу данных (заменяет все данные)
 def save_data_to_db(df):
     with sqlite3.connect(DB_PATH) as conn:
-        df.to_sql("enterprises", conn, if_exists="replace", index=False)
+        # Проверяем, что DataFrame имеет столбец `id`
+        if "id" in df.columns:
+            df["id"] = df["id"].astype(int)  # Убедимся, что `id` целое число
+        else:
+            raise ValueError("Поле `id` отсутствует в DataFrame")
+
+        # Удаляем старые данные, но сохраняем структуру таблицы
+        conn.execute("DELETE FROM enterprises")
+        # Добавляем новые данные
+        df.to_sql("enterprises", conn, if_exists="append", index=False)
 
 
 # Функция для добавления новой записи в базу данных
@@ -89,9 +98,9 @@ st.subheader("Список Транспортных Предприятий")
 if not st.session_state.enterprises.empty:
     # Настраиваем таблицу
     gb = GridOptionsBuilder.from_dataframe(st.session_state.enterprises)
-    gb.configure_column("id", suppressMovable=True)
-    #gb.configure_pagination(paginationAutoPageSize=True)  # Пагинация
-    gb.configure_default_column(editable=True)  # Все колонки редактируемые
+    gb.configure_column("id", suppressMovable=True, editable=False)  # `id` теперь НЕ редактируем
+    gb.configure_column("name", editable=True)
+    gb.configure_column("description", editable=True)
     gb.configure_selection(selection_mode="multiple", use_checkbox=True)  # Выбор строк через чекбокс
     grid_options = gb.build()
 
@@ -109,12 +118,11 @@ if not st.session_state.enterprises.empty:
     # Кнопки управления
     col1, col2 = st.columns(2)
     with col1:
-        ""
-        #if st.button("Сохранить изменения", key="save_changes_button"):
+        if st.button("Сохранить изменения", key="save_changes_button"):
         #    # Сохраняем изменения в базу данных
-        #    save_data_to_db(pd.DataFrame(updated_data))
-        #    st.session_state.enterprises = load_data_from_db()  # Синхронизируем с состоянием
-        #    st.success("Изменения успешно сохранены в базе данных!")
+            save_data_to_db(pd.DataFrame(updated_data))
+            st.session_state.enterprises = load_data_from_db()  # Синхронизируем с состоянием
+            st.success("Изменения успешно сохранены в базе данных!")
 
     with col2:
         selected_rows = grid_response.get("selected_rows")
